@@ -6,6 +6,31 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="style.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("td").click(function() {
+                    var content = $(this).text();
+                    if(content != "Not available") {
+                        $(this).toggleClass("tdhighlight");
+                        if($(this).hasClass("tdhighlight")) {
+                            $('#displaySelected').css("visibility","visiable");
+                            $('#displaySelected').css("margin-top","2em");
+                            var columnIndex = $(this).index(); 
+                            var cliffSite = $("th:eq(" + columnIndex + ")").text();
+                            $('#result').append("<p>" + content + " at " + cliffSite + "</p>");
+                        } else {
+                            $('#result p:contains('+content+')').remove();
+                            if($('#result').has('p').length == false) {
+                                $('#displaySelected').css("visibility","hidden");
+                                $('#displaySelected').css("margin-top","0");
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
     </head>
 
     <!-- Container is to wrap everything -->
@@ -79,6 +104,15 @@
                     </tr>
                 </tbody>
             </table>
+            <div id="displaySelected">
+                <div id="result">
+                    <h4>My selected activities to enquire:</h4>
+                </div>
+                <div id="sendinfo">
+                    <input type="email" placeholder="johndoe@gmail.com">
+                    <button>Get Info</button>
+                </div>
+            </div>
         </main>
         
         <section class="partnergroup">
